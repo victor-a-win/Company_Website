@@ -1,20 +1,114 @@
 import GenericContainer from "@/components/containers/generic.container";
-import PostsList from "../../components/blog/blog.list";
-import { getBackendlessPosts } from "@/libs/backendless/backendless.posts";
-import { IPostResponse } from "@/model/post.model";
-import EmptyListScreen from "@/components/empty/empty.list.screen";
+import { Card } from "flowbite-react";
+import cardTheme from "@/theme/card.theme";
+import Image from "next/image";
 
-export default async function HomePage() {
-  const posts = await getBackendlessPosts(0, 10);
-
+export default function HomePage() {
   return (
     <>
-      <EmptyListScreen hidden={posts?.length !== 0} />
-      <GenericContainer hidden={posts?.length === 0}>
-        <div className="p-8">
-          <PostsList posts={posts as IPostResponse[]} isEdit={false} />
+      {/* Hero Section */}
+      <section className="relative h-[60vh] w-full ">
+        <Image
+          src="/Bus_Banner.svg"
+          alt="My Bus-ID Banner"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/[.25] flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">My Bus-ID</h1>
+            <p className="text-xl md:text-2xl">Your reliable transportation partner across Indonesia</p>
+          </div>
         </div>
+      </section>
+
+      <GenericContainer>
+        {/* Company Overview */}
+        <section className="py-12 px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">About Our Company</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Our Story</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Founded in 2010, My Bus-ID has been providing reliable transportation services across Indonesia. 
+                We pride ourselves on our commitment to safety, comfort, and punctuality for all our passengers.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Our Culture</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                At My Bus-ID, we believe in creating a family environment where both our employees and customers 
+                feel valued. Our team is dedicated to providing the best travel experience possible.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section */}
+        <section className="py-12 bg-gray-50 dark:bg-gray-800 px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Our Services</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <Card key={index} theme={cardTheme.card} className="h-full">
+                <h3 className="text-xl font-semibold">{service.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
+                <button className="mt-4 text-blue-600 hover:underline self-start">
+                  Learn More →
+                </button>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="py-12 px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} theme={cardTheme.card} className="h-full">
+                <p className="italic mb-4">"{testimonial.quote}"</p>
+                <p className="font-semibold">- {testimonial.author}</p>
+                <p className="text-sm text-gray-500">{testimonial.position}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
       </GenericContainer>
     </>
   );
 }
+
+// Sample data - replace with your actual content
+const services = [
+  {
+    title: "Intercity Travel",
+    description: "Comfortable and reliable bus services connecting major cities across Indonesia."
+  },
+  {
+    title: "Corporate Transport",
+    description: "Dedicated bus services for companies, schools, and organizations."
+  },
+  {
+    title: "Tour Packages",
+    description: "Customized travel packages for groups and tourists exploring Indonesia."
+  }
+];
+
+const testimonials = [
+  {
+    quote: "My Bus-ID provides the most comfortable intercity travel experience I've ever had. Their punctuality is impressive!",
+    author: "Budi Santoso",
+    position: "Regular Commuter"
+  },
+  {
+    quote: "We've been using My Bus-ID for our company events for years. Their service is always reliable and professional.",
+    author: "Dewi Anggraini",
+    position: "Office Manager"
+  },
+  {
+    quote: "The tour package to Bali was exceptionally well-organized. The buses were clean and the drivers were courteous.",
+    author: "Sarah Johnson",
+    position: "Tourist from Australia"
+  }
+];

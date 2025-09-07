@@ -32,7 +32,7 @@ const CustomFooter = () => {
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
             <FooterBrand
-              src="/logo/logoipsum-340.svg"
+              src="/logo/logoipsum-248.svg"
               alt="My Blog Logo"
               name="My Blog"
               className="grayscale-100 invert"
@@ -49,7 +49,7 @@ const CustomFooter = () => {
             <div>
               <FooterTitle title="Follow us" />
               <FooterLinkGroup col>
-                <FooterLink href="#">Github</FooterLink>
+                <FooterLink href="https://github.com/victor-a-win">Github</FooterLink>
                 <FooterLink href="#">Discord</FooterLink>
               </FooterLinkGroup>
             </div>

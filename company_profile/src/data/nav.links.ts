@@ -3,6 +3,9 @@ import RouteData from "@/model/route.model";
 const publicRoutes: RouteData[] = [
   { path: "/", label: "Home" },
   { path: "/about-us", label: "About Us" },
+  { path: "/services", label: "Services" },
+  { path: "/teams", label: "Teams" },
+  { path: "/blog", label: "Blog" },
 ];
 
 const guestOnlyRoutes: RouteData[] = [
