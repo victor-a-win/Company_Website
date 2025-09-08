@@ -5,7 +5,9 @@ import { Card } from "flowbite-react";
 import cardTheme from "@/theme/card.theme";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
-import { FiUser } from "react-icons/fi"; // Import a fallback icon
+import { FiUser } from "react-icons/fi";
+import axios from "axios";
+
 
 // Define proper interfaces
 interface RandomUserName {
@@ -85,8 +87,12 @@ export default function TeamsPage() {
   const fetchTeamMembers = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
-      const data = await response.json();
+      
+      // Replace fetch with axios
+      const response = await axios.get('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
+      
+      // Axios returns data in response.data
+      const data = response.data;
       
       // Map API data to our team structure with roles and bios
       const members = data.results.map((user: RandomUser, index: number) => ({
@@ -115,6 +121,7 @@ export default function TeamsPage() {
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);
+
 
   return (
        <>

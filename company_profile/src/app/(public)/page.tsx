@@ -9,7 +9,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full ">
         <Image
-          src="/Bus_Banner.svg"
+          src="/Bus_Banner.webp"
           alt="My Bus-ID Banner"
           fill
           className="object-cover"
