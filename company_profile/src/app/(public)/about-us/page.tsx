@@ -98,7 +98,7 @@ export default function AboutUsPage() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="relative h-64 md:h-96 order-2 md:order-1">
               <Image
-                src="/company_culture.webp" // Replace with your actual culture image
+                src="/company_culture2.webp"
                 alt="My Bus-ID company culture"
                 fill
                 className="object-cover rounded-lg"
