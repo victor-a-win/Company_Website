@@ -62,7 +62,7 @@ const roles = [
   "Customer Support Lead"
 ];
 
-// Predefined bios for our team members
+// Predefined bios for our team members (moved outside component)
 const bios = [
   "With over 20 years in the transportation industry, dedicated to revolutionizing bus travel in Indonesia.",
   "Ensures our operations run smoothly and efficiently across all routes and services.",
@@ -78,32 +78,6 @@ const bios = [
   "Leads our support team to resolve customer inquiries and ensure satisfaction."
 ];
 
-// Generate initials from name
-const getInitials = (firstName: string, lastName: string) => {
-  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-};
-
-// Generate a consistent color based on the name
-const getColorFromName = (firstName: string, lastName: string) => {
-  const colors = [
-    'bg-blue-100 text-blue-800',
-    'bg-green-100 text-green-800',
-    'bg-red-100 text-red-800',
-    'bg-yellow-100 text-yellow-800',
-    'bg-purple-100 text-purple-800',
-    'bg-pink-100 text-pink-800',
-    'bg-indigo-100 text-indigo-800'
-  ];
-  
-  const name = firstName + lastName;
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  
-  return colors[Math.abs(hash) % colors.length];
-};
-
 export default function TeamsPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -114,12 +88,8 @@ export default function TeamsPage() {
     try {
       setIsLoading(true);
       
-      // Use a proxy to avoid CORS issues in production
-      const proxyUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://cors-anywhere.herokuapp.com/'
-        : '';
-      
-      const response = await axios.get(`${proxyUrl}https://randomuser.me/api/?results=12&nat=us,gb,au,ca`);
+      // Replace fetch with axios
+      const response = await axios.get('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
       
       // Axios returns data in response.data
       const data = response.data;
@@ -138,29 +108,9 @@ export default function TeamsPage() {
       setTeamMembers(members);
       setIsLoading(false);
     } catch (err) {
-      console.error('Error fetching team data:', err);
-      
-      // Fallback to static data if API fails
-      const fallbackMembers = Array.from({ length: 12 }, (_, index) => ({
-        id: `fallback-${index}`,
-        name: {
-          first: `Team`,
-          last: `Member ${index + 1}`
-        },
-        email: `member${index + 1}@mybus-id.com`,
-        picture: {
-          large: ''
-        },
-        location: {
-          city: 'Jakarta',
-          country: 'Indonesia'
-        },
-        role: roles[index % roles.length],
-        bio: bios[index % bios.length]
-      }));
-      
-      setTeamMembers(fallbackMembers);
+      setError('Failed to load team data. Please try again later.');
       setIsLoading(false);
+      console.error('Error fetching team data:', err);
     }
   }, []);
 
@@ -174,7 +124,7 @@ export default function TeamsPage() {
 
 
   return (
-    <>
+       <>
       {/* Hero Section */}
       <section className="relative h-[40vh] w-full bg-blue-900">
         <div className="absolute inset-0 bg-black/[.50] flex items-center justify-center">
@@ -190,7 +140,7 @@ export default function TeamsPage() {
         <section className="py-12 px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4">The People Who Drive Us Forward</h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-gray-00">
               At My Bus-ID, our team is our greatest asset. From our drivers to our management staff, 
               every member plays a crucial role in delivering exceptional transportation services 
               to our customers across Indonesia.
@@ -228,47 +178,44 @@ export default function TeamsPage() {
             </div>
           )}
 
-          {/* Team Grid */}
+        {/* Team Grid */}
           {!isLoading && !error && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {teamMembers.map((member) => (
-                <Card key={member.id} theme={cardTheme.card} className="text-center">
-                  <div className="relative h-40 w-40 mx-auto mb-4">
-                    {imageErrors.has(member.id) || !member.picture.large ? (
-                      <div className={`w-full h-full flex items-center justify-center rounded-full ${getColorFromName(member.name.first, member.name.last)}`}>
-                        <span className="text-2xl font-bold">
-                          {getInitials(member.name.first, member.name.last)}
-                        </span>
-                      </div>
-                    ) : (
-                      <Image
-                        src={member.picture.large}
-                        alt={`${member.name.first} ${member.name.last}`}
-                        width={160}
-                        height={160}
-                        className="object-cover rounded-full"
-                        onError={() => handleImageError(member.id)}
-                      />
-                    )}
-                  </div>
-                  <h3 className="text-xl font-semibold dark:text-gray-200">{member.name.first} {member.name.last}</h3>
-                  <p className="text-blue-600 mb-2">{member.role}</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                    {member.location.city}, {member.location.country}
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{member.bio}</p>
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <a 
-                      href={`mailto:${member.email}`}
-                      className="text-blue-600 hover:underline text-sm"
-                    >
-                      {member.email}
-                    </a>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
+              <Card key={member.id} theme={cardTheme.card} className="text-center">
+                <div className="relative h-40 w-40 mx-auto mb-4">
+                  {imageErrors.has(member.id) ? (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
+                      <FiUser className="h-16 w-16 text-gray-400" />
+                    </div>
+                  ) : (
+                    <Image
+                      src={member.picture.large}
+                      alt={`${member.name.first} ${member.name.last}`}
+                      fill
+                      className="object-cover rounded-full"
+                      onError={() => handleImageError(member.id)}
+                    />
+                  )}
+                </div>
+                <h3 className="text-xl font-semibold dark:text-gray-200">{member.name.first} {member.name.last}</h3>
+                <p className="text-blue-600 mb-2">{member.role}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                  {member.location.city}, {member.location.country}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{member.bio}</p>
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <a 
+                    href={`mailto:${member.email}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {member.email}
+                  </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
 
           {/* Team Culture Section */}
           <section className="py-12 mt-12 bg-gray-50 dark:bg-gray-800 rounded-lg px-6">
@@ -302,7 +249,7 @@ export default function TeamsPage() {
           {/* Join Our Team CTA */}
           <section className="py-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Interested in Joining Our Team?</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
+            <p className="text-gray-600 dark:text-gray-700 max-w-2xl mx-auto mb-6">
               We&apos;re always looking for passionate individuals who share our commitment to excellence 
               in transportation services. Check out our current openings.
             </p>
