@@ -8,7 +8,6 @@ import { useEffect, useState, useCallback } from "react";
 import { FiUser } from "react-icons/fi";
 import axios from "axios";
 
-
 // Define proper interfaces
 interface RandomUserName {
   first: string;
@@ -88,9 +87,11 @@ export default function TeamsPage() {
     try {
       setIsLoading(true);
       
-      // Replace fetch with axios
-      const response = await axios.get('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
-      
+      // Add a timeout to the request
+      const response = await axios.get('https://randomuser.me/api/?results=12&nat=us,gb,au,ca', {
+        timeout: 10000, // 10 second timeout
+      });
+
       // Axios returns data in response.data
       const data = response.data;
       
@@ -108,13 +109,22 @@ export default function TeamsPage() {
       setTeamMembers(members);
       setIsLoading(false);
     } catch (err) {
-      setError('Failed to load team data. Please try again later.');
-      setIsLoading(false);
       console.error('Error fetching team data:', err);
+      if (axios.isAxiosError(err)) {
+        if (err.code === 'ECONNABORTED') {
+          setError('Request timeout. Please check your internet connection and try again.');
+        } else {
+          setError(`Failed to load team data: ${err.message}`);
+        }
+      } else {
+        setError('Failed to load team data. Please try again later.');
+      }
+      setIsLoading(false);
     }
   }, []);
 
-  const handleImageError = (id: string) => {
+   const handleImageError = (id: string) => {
+    console.warn(`Image failed to load for user ${id}`);
     setImageErrors(prev => new Set(prev).add(id));
   };
 
@@ -195,6 +205,7 @@ export default function TeamsPage() {
                       fill
                       className="object-cover rounded-full"
                       onError={() => handleImageError(member.id)}
+                      unoptimized={true} 
                     />
                   )}
                 </div>

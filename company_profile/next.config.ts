@@ -16,8 +16,13 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    domains: ["randomuser.me/api/"],
+    // Add these for better image optimization
+    formats: ["image/webp", "image/avif"],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  // Enable React strict mode for better error handling
+  reactStrictMode: true,
 };
 
 export default withFlowbiteReact(nextConfig);
