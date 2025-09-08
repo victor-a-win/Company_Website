@@ -5,6 +5,7 @@ import { Card } from "flowbite-react";
 import cardTheme from "@/theme/card.theme";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
+import { FiUser } from "react-icons/fi"; // Import a fallback icon
 
 // Define proper interfaces
 interface RandomUserName {
@@ -79,6 +80,7 @@ export default function TeamsPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   const fetchTeamMembers = useCallback(async () => {
     try {
@@ -104,17 +106,21 @@ export default function TeamsPage() {
       setIsLoading(false);
       console.error('Error fetching team data:', err);
     }
-  }, []); // Empty dependency array since roles and bios are now outside
+  }, []);
+
+  const handleImageError = (id: string) => {
+    setImageErrors(prev => new Set(prev).add(id));
+  };
 
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);
 
   return (
-    <>
+       <>
       {/* Hero Section */}
       <section className="relative h-[40vh] w-full bg-blue-900">
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/[.50] flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Team</h1>
             <p className="text-xl md:text-2xl">Meet the dedicated professionals behind My Bus-ID</p>
@@ -127,7 +133,7 @@ export default function TeamsPage() {
         <section className="py-12 px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4">The People Who Drive Us Forward</h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-gray-00">
               At My Bus-ID, our team is our greatest asset. From our drivers to our management staff, 
               every member plays a crucial role in delivering exceptional transportation services 
               to our customers across Indonesia.
@@ -165,44 +171,51 @@ export default function TeamsPage() {
             </div>
           )}
 
-          {/* Team Grid */}
+        {/* Team Grid */}
           {!isLoading && !error && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {teamMembers.map((member) => (
-                <Card key={member.id} theme={cardTheme.card} className="text-center">
-                  <div className="relative h-40 w-40 mx-auto mb-4">
+              <Card key={member.id} theme={cardTheme.card} className="text-center">
+                <div className="relative h-40 w-40 mx-auto mb-4">
+                  {imageErrors.has(member.id) ? (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
+                      <FiUser className="h-16 w-16 text-gray-400" />
+                    </div>
+                  ) : (
                     <Image
                       src={member.picture.large}
                       alt={`${member.name.first} ${member.name.last}`}
                       fill
                       className="object-cover rounded-full"
+                      onError={() => handleImageError(member.id)}
                     />
-                  </div>
-                  <h3 className="text-xl font-semibold">{member.name.first} {member.name.last}</h3>
-                  <p className="text-blue-600 mb-2">{member.role}</p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                    {member.location.city}, {member.location.country}
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{member.bio}</p>
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <a 
-                      href={`mailto:${member.email}`}
-                      className="text-blue-600 hover:underline text-sm"
-                    >
-                      {member.email}
-                    </a>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
+                  )}
+                </div>
+                <h3 className="text-xl font-semibold dark:text-gray-200">{member.name.first} {member.name.last}</h3>
+                <p className="text-blue-600 mb-2">{member.role}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                  {member.location.city}, {member.location.country}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{member.bio}</p>
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <a 
+                    href={`mailto:${member.email}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {member.email}
+                  </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
 
           {/* Team Culture Section */}
           <section className="py-12 mt-12 bg-gray-50 dark:bg-gray-800 rounded-lg px-6">
-            <h2 className="text-3xl font-bold text-center mb-8">Our Team Culture</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 dark:text-gray-200">Our Team Culture</h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <div>
-                <h3 className="text-xl font-semibold mb-4">Collaboration &amp; Excellence</h3>
+                <h3 className="text-xl font-semibold mb-4 dark:text-blue-200">Collaboration &amp; Excellence</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   At My Bus-ID, we believe that our strength comes from our people. We foster a 
                   collaborative environment where every team member&apos;s voice is heard and valued.
@@ -213,7 +226,7 @@ export default function TeamsPage() {
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-4">Diversity &amp; Inclusion</h3>
+                <h3 className="text-xl font-semibold mb-4 dark:text-blue-200">Diversity &amp; Inclusion</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   Our team represents the diverse communities we serve across Indonesia. We celebrate 
                   different perspectives and experiences that make our company stronger.
@@ -229,7 +242,7 @@ export default function TeamsPage() {
           {/* Join Our Team CTA */}
           <section className="py-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Interested in Joining Our Team?</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
+            <p className="text-gray-600 dark:text-gray-700 max-w-2xl mx-auto mb-6">
               We&apos;re always looking for passionate individuals who share our commitment to excellence 
               in transportation services. Check out our current openings.
             </p>

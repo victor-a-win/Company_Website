@@ -30,14 +30,14 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold mb-4">Our Story</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-700">
                 Founded in 2010, My Bus-ID has been providing reliable transportation services across Indonesia. 
                 We pride ourselves on our commitment to safety, comfort, and punctuality for all our passengers.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Our Culture</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-700">
                 At My Bus-ID, we believe in creating a family environment where both our employees and customers 
                 feel valued. Our team is dedicated to providing the best travel experience possible.
               </p>
@@ -46,13 +46,13 @@ export default function HomePage() {
         </section>
 
         {/* Services Section */}
-        <section className="py-12 bg-gray-50 dark:bg-gray-800 px-4">
+        <section className="py-12 bg-gray-50 dark:bg-gray-300 px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Our Services</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {services.map((service, index) => (
               <Card key={index} theme={cardTheme.card} className="h-full">
-                <h3 className="text-xl font-semibold">{service.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
+                <h3 className="text-xl font-semibold dark:text-gray-200">{service.title}</h3>
+                <p className="text-gray-600 dark:text-gray-200">{service.description}</p>
                 <button className="mt-4 text-blue-600 hover:underline self-start">
                   Learn More →
                 </button>
@@ -67,9 +67,9 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
               <Card key={index} theme={cardTheme.card} className="h-full">
-                <p className="italic mb-4">{testimonial.quote}</p>
-                <p className="font-semibold">- {testimonial.author}</p>
-                <p className="text-sm text-gray-500">{testimonial.position}</p>
+                <p className="italic mb-4 dark:text-gray-200">{testimonial.quote}</p>
+                <p className="font-semibold dark:text-gray-200">- {testimonial.author}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-200">{testimonial.position}</p>
               </Card>
             ))}
           </div>

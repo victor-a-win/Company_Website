@@ -64,12 +64,12 @@ const CustomFooter = () => {
         </div>
         <FooterDivider className="my-8" />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
-          <FooterCopyright href="#" by="Flowbite™" year={2022} />
+          <FooterCopyright href="#" by="My Bus-ID™" year={2025} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />
             <FooterIcon href="#" icon={BsInstagram} />
             <FooterIcon href="#" icon={BsTwitterX} />
-            <FooterIcon href="#" icon={BsGithub} />
+            <FooterIcon href="https://github.com/victor-a-win" icon={BsGithub} />
             <FooterIcon href="#" icon={BsDribbble} />
           </div>
         </div>

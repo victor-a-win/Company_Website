@@ -30,12 +30,12 @@ export default function AboutUsPage() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-xl font-semibold mb-4">From Humble Beginnings</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 dark:text-gray-600 mb-4">
                 My Bus-ID was founded in 2010 with just three buses serving routes between Jakarta and Bandung. 
                 Our founder, Mr. Ahmad Wijaya, saw the need for reliable, comfortable, and affordable transportation 
                 for Indonesians traveling between cities.
               </p>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 dark:text-gray-600 mb-4">
                 What started as a small family business has now grown into one of Indonesia&apos;s leading transportation 
                 companies, with over 200 buses serving more than 50 routes across Java, Sumatra, and Bali.
               </p>
@@ -66,7 +66,7 @@ export default function AboutUsPage() {
 
         {/* Team Section */}
         <section className="py-12 bg-gray-50 dark:bg-gray-800 px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Our Team</h2>
+          <h2 className="text-3xl font-bold text-center mb-8 dark:text-gray-200">Our Team</h2>
           <p className="text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12">
             Behind My Bus-ID is a dedicated team of professionals committed to providing the best transportation
             experience for our customers. From our drivers to our management team, everyone plays a vital role
@@ -84,7 +84,7 @@ export default function AboutUsPage() {
                     className="object-cover rounded-full"
                   />
                 </div>
-                <h3 className="text-xl font-semibold">{member.name}</h3>
+                <h3 className="text-xl font-semibold dark:text-gray-200">{member.name}</h3>
                 <p className="text-blue-600 mb-2">{member.position}</p>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{member.bio}</p>
               </Card>
@@ -106,7 +106,7 @@ export default function AboutUsPage() {
             </div>
             <div className="order-1 md:order-2">
               <h3 className="text-xl font-semibold mb-4">Values We Live By</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 dark:text-gray-600 mb-4">
                 At My Bus-ID, we believe that our people are our greatest asset. We&apos;ve built a culture that 
                 values safety, reliability, innovation, and customer satisfaction above all else.
               </p>
@@ -118,7 +118,7 @@ export default function AboutUsPage() {
                     </div>
                     <div>
                       <h4 className="font-semibold">{value.title}</h4>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm">{value.description}</p>
+                      <p className="text-gray-600 dark:text-gray-700 text-sm">{value.description}</p>
                     </div>
                   </div>
                 ))}

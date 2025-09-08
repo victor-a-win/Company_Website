@@ -28,7 +28,7 @@ export default function ServicesPage() {
         <section className="py-12 px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4">Transportation Solutions</h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-gray-700">
               My Bus-ID offers a wide range of transportation services tailored to meet the diverse needs of our customers. 
               From daily commutes to special events, we provide safe, reliable, and comfortable travel experiences.
             </p>
@@ -52,7 +52,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-semibold">{service.title}</h3>
+                  <h3 className="text-xl font-semibold dark:text-gray-200">{service.title}</h3>
                   {service.popular && (
                     <Badge color="info" className="ml-2">
                       Most Popular
@@ -63,7 +63,7 @@ export default function ServicesPage() {
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{service.description}</p>
                 
                 <div className="mb-4">
-                  <h4 className="font-semibold mb-2">Pricing:</h4>
+                  <h4 className="font-semibold mb-2 dark:text-blue-200">Pricing:</h4>
                   <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                     {service.pricing.map((price, i) => (
                       <li key={i} className="flex justify-between">
@@ -74,13 +74,13 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 
-                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <h4 className="font-semibold mb-2">What Our Customers Say:</h4>
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-200">
+                  <h4 className="font-semibold mb-2 dark:text-gray-200">What Our Customers Say:</h4>
                   <div className="space-y-3">
                     {service.testimonials.map((testimonial, i) => (
-                      <div key={i} className="text-sm italic text-gray-600 dark:text-gray-300">
+                      <div key={i} className="text-sm italic text-gray-600 dark:text-gray-200">
                         <p>{testimonial.quote}</p>
-                        <p className="mt-1 not-italic font-semibold">- {testimonial.author}</p>
+                        <p className="mt-1 not-italic font-semibold dark:text-blue-200">- {testimonial.author}</p>
                       </div>
                     ))}
                   </div>
@@ -96,8 +96,8 @@ export default function ServicesPage() {
 
         {/* Additional Services Section */}
         <section className="py-12 bg-gray-50 dark:bg-gray-800 px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Additional Services</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <h2 className="text-3xl font-bold text-center mb-8 dark:text-gray-200">Additional Services</h2>
+          <div className="grid md:grid-cols-2 gap-8 dark:text-gray-200">
             <Card theme={cardTheme.card}>
               <h3 className="text-xl font-semibold mb-4">VIP Charter Services</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -139,7 +139,7 @@ export default function ServicesPage() {
         {/* Call to Action */}
         <section className="py-12 px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Need a Custom Solution?</h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
+          <p className="text-gray-600 dark:text-gray-700 max-w-2xl mx-auto mb-6">
             We understand that every transportation need is unique. Contact us to discuss custom solutions 
             tailored to your specific requirements.
           </p>
