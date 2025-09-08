@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    domains: ["randomuser.me"],
+    domains: ["randomuser.me/api/"],
   },
 };
 
