@@ -79,7 +79,7 @@ export default function ServicesPage() {
                   <div className="space-y-3">
                     {service.testimonials.map((testimonial, i) => (
                       <div key={i} className="text-sm italic text-gray-600 dark:text-gray-300">
-                        <p>"{testimonial.quote}"</p>
+                        <p>{testimonial.quote}</p>
                         <p className="mt-1 not-italic font-semibold">- {testimonial.author}</p>
                       </div>
                     ))}
@@ -166,11 +166,11 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "I travel between Jakarta and Bandung weekly for work. My Bus-ID is always punctual and comfortable.",
+        quote: <span>I travel between Jakarta and Bandung weekly for work. My Bus-ID is always punctual and comfortable.</span>,
         author: "Rina Wijaya, Business Consultant"
       },
       {
-        quote: "The business class seats are worth the extra cost. I can work comfortably during the journey.",
+        quote: <span>The business class seats are worth the extra cost. I can work comfortably during the journey.</span>,
         author: "Budi Santoso, Sales Manager"
       }
     ]
@@ -187,18 +187,18 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "My Bus-ID has been our employee shuttle provider for 3 years. Their reliability is exceptional.",
+        quote: <span>My Bus-ID has been our employee shuttle provider for 3 years. Their reliability is exceptional.</span>,
         author: "Dewi Anggraini, HR Director"
       },
       {
-        quote: "They handled our company retreat transportation flawlessly for 200 employees.",
+        quote: <span>They handled our company retreat transportation flawlessly for 200 employees.</span>,
         author: "Ahmad Fauzi, Event Coordinator"
       }
     ]
   },
   {
     title: "Tour Packages",
-    description: "Customized travel packages for groups and tourists exploring Indonesia's beautiful destinations.",
+    description: <span>Customized travel packages for groups and tourists exploring Indonesia&apos;s beautiful destinations.</span>,
     image: "/services/tour_packages.webp",
     popular: true,
     pricing: [
@@ -208,11 +208,11 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "The Bali tour package was amazing! Comfortable buses and knowledgeable guides.",
+        quote: <span>The Bali tour package was amazing! Comfortable buses and knowledgeable guides.</span>,
         author: "Sarah Johnson, Tourist from Australia"
       },
       {
-        quote: "Our school trip to Yogyakarta was well-organized and safe thanks to My Bus-ID.",
+        quote: <span>Our school trip to Yogyakarta was well-organized and safe thanks to My Bus-ID.</span>,
         author: "Ibu Siti, School Principal"
       }
     ]
@@ -229,11 +229,11 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "I never worry about missing flights when using My Bus-ID's airport service.",
+        quote: <span>I never worry about missing flights when using My Bus-ID&apos;s airport service.</span>,
         author: "Michael Chen, Frequent Flyer"
       },
       {
-        quote: "Their flight monitoring system is impressive. They adjusted pickup time when my flight was delayed.",
+        quote: <span>Their flight monitoring system is impressive. They adjusted pickup time when my flight was delayed.</span>,
         author: "Lisa Darmawan, Business Executive"
       }
     ]
@@ -250,11 +250,11 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "My Bus-ID handled transportation for our 500-guest wedding flawlessly.",
+        quote: <span>My Bus-ID handled transportation for our 500-guest wedding flawlessly.</span>,
         author: "Rina & Adi, Newlyweds"
       },
       {
-        quote: "The conference shuttle service was punctual and professional throughout our 3-day event.",
+        quote: <span>The conference shuttle service was punctual and professional throughout our 3-day event.</span>,
         author: "Conference Organizer, Tech Summit 2023"
       }
     ]
@@ -271,11 +271,11 @@ const services = [
     ],
     testimonials: [
       {
-        quote: "The monthly pass saves me both time and money. Highly recommended for regular travelers.",
+        quote: <span>The monthly pass saves me both time and money. Highly recommended for regular travelers.</span>,
         author: "Andi Pratama, Consultant"
       },
       {
-        quote: "I've been using the monthly pass for over a year. The convenience is unmatched.",
+        quote: <span>I&apos;ve been using the monthly pass for over a year. The convenience is unmatched.</span>,
         author: "Sari Dewi, University Lecturer"
       }
     ]

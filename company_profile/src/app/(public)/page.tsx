@@ -60,14 +60,14 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-
+        
         {/* Testimonials */}
         <section className="py-12 px-4">
           <h2 className="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
               <Card key={index} theme={cardTheme.card} className="h-full">
-                <p className="italic mb-4">"{testimonial.quote}"</p>
+                <p className="italic mb-4">{testimonial.quote}</p>
                 <p className="font-semibold">- {testimonial.author}</p>
                 <p className="text-sm text-gray-500">{testimonial.position}</p>
               </Card>
@@ -80,6 +80,7 @@ export default function HomePage() {
 }
 
 // Sample data - replace with your actual content
+
 const services = [
   {
     title: "Intercity Travel",
@@ -97,17 +98,17 @@ const services = [
 
 const testimonials = [
   {
-    quote: "My Bus-ID provides the most comfortable intercity travel experience I've ever had. Their punctuality is impressive!",
+    quote: <span>My Bus-ID provides the most comfortable intercity travel experience I&apos;ve ever had. Their punctuality is impressive.</span>,
     author: "Budi Santoso",
     position: "Regular Commuter"
   },
   {
-    quote: "We've been using My Bus-ID for our company events for years. Their service is always reliable and professional.",
+    quote: <span>We&apos;ve been using My Bus-ID for our company events for years. Their service is always reliable and professional.</span>,
     author: "Dewi Anggraini",
     position: "Office Manager"
   },
   {
-    quote: "The tour package to Bali was exceptionally well-organized. The buses were clean and the drivers were courteous.",
+    quote: <span>The tour package to Bali was exceptionally well-organized. The buses were clean and the drivers were courteous.</span>,
     author: "Sarah Johnson",
     position: "Tourist from Australia"
   }

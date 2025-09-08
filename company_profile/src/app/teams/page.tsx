@@ -4,92 +4,111 @@ import GenericContainer from "@/components/containers/generic.container";
 import { Card } from "flowbite-react";
 import cardTheme from "@/theme/card.theme";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+// Define proper interfaces
+interface RandomUserName {
+  first: string;
+  last: string;
+}
+
+interface RandomUserPicture {
+  large: string;
+}
+
+interface RandomUserLocation {
+  city: string;
+  country: string;
+}
+
+interface RandomUserLogin {
+  uuid: string;
+}
+
+interface RandomUser {
+  name: RandomUserName;
+  email: string;
+  picture: RandomUserPicture;
+  location: RandomUserLocation;
+  login: RandomUserLogin;
+}
 
 interface TeamMember {
   id: string;
-  name: {
-    first: string;
-    last: string;
-  };
+  name: RandomUserName;
   email: string;
-  picture: {
-    large: string;
-  };
-  location: {
-    city: string;
-    country: string;
-  };
+  picture: RandomUserPicture;
+  location: RandomUserLocation;
   role: string;
   bio: string;
 }
+
+// Predefined roles for our team members (moved outside component)
+const roles = [
+  "CEO & Founder",
+  "Operations Director",
+  "Head of Safety",
+  "Customer Experience Manager",
+  "Senior Bus Driver",
+  "Maintenance Supervisor",
+  "Route Planner",
+  "Marketing Director",
+  "IT Manager",
+  "HR Specialist",
+  "Finance Manager",
+  "Customer Support Lead"
+];
+
+// Predefined bios for our team members (moved outside component)
+const bios = [
+  "With over 20 years in the transportation industry, dedicated to revolutionizing bus travel in Indonesia.",
+  "Ensures our operations run smoothly and efficiently across all routes and services.",
+  "Oversees all safety protocols and training programs to ensure passenger safety is never compromised.",
+  "Leads our customer service team to ensure every passenger has a pleasant journey with My Bus-ID.",
+  "Certified professional driver with 15 years of accident-free service and extensive route knowledge.",
+  "Manages our fleet maintenance to ensure all vehicles meet the highest standards of reliability.",
+  "Designs and optimizes our routes to provide the most efficient travel options for our customers.",
+  "Develops strategies to communicate our services and values to customers across Indonesia.",
+  "Manages our technology infrastructure and digital platforms for seamless customer experiences.",
+  "Responsible for recruiting and developing the talented individuals who make up our team.",
+  "Oversees financial planning and ensures the sustainable growth of our services.",
+  "Leads our support team to resolve customer inquiries and ensure satisfaction."
+];
 
 export default function TeamsPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Predefined roles for our team members
-  const roles = [
-    "CEO & Founder",
-    "Operations Director",
-    "Head of Safety",
-    "Customer Experience Manager",
-    "Senior Bus Driver",
-    "Maintenance Supervisor",
-    "Route Planner",
-    "Marketing Director",
-    "IT Manager",
-    "HR Specialist",
-    "Finance Manager",
-    "Customer Support Lead"
-  ];
-
-  // Predefined bios for our team members
-  const bios = [
-    "With over 20 years in the transportation industry, dedicated to revolutionizing bus travel in Indonesia.",
-    "Ensures our operations run smoothly and efficiently across all routes and services.",
-    "Oversees all safety protocols and training programs to ensure passenger safety is never compromised.",
-    "Leads our customer service team to ensure every passenger has a pleasant journey with My Bus-ID.",
-    "Certified professional driver with 15 years of accident-free service and extensive route knowledge.",
-    "Manages our fleet maintenance to ensure all vehicles meet the highest standards of reliability.",
-    "Designs and optimizes our routes to provide the most efficient travel options for our customers.",
-    "Develops strategies to communicate our services and values to customers across Indonesia.",
-    "Manages our technology infrastructure and digital platforms for seamless customer experiences.",
-    "Responsible for recruiting and developing the talented individuals who make up our team.",
-    "Oversees financial planning and ensures the sustainable growth of our services.",
-    "Leads our support team to resolve customer inquiries and ensure satisfaction."
-  ];
+  const fetchTeamMembers = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
+      const data = await response.json();
+      
+      // Map API data to our team structure with roles and bios
+      const members = data.results.map((user: RandomUser, index: number) => ({
+        id: user.login.uuid,
+        name: user.name,
+        email: user.email,
+        picture: user.picture,
+        location: user.location,
+        role: roles[index % roles.length],
+        bio: bios[index % bios.length]
+      }));
+      
+      setTeamMembers(members);
+      setIsLoading(false);
+    } catch (err) {
+      setError('Failed to load team data. Please try again later.');
+      setIsLoading(false);
+      console.error('Error fetching team data:', err);
+    }
+  }, []); // Empty dependency array since roles and bios are now outside
 
   useEffect(() => {
-    const fetchTeamMembers = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch('https://randomuser.me/api/?results=12&nat=us,gb,au,ca');
-        const data = await response.json();
-        
-        // Map API data to our team structure with roles and bios
-        const members = data.results.map((user: any, index: number) => ({
-          id: user.login.uuid,
-          name: user.name,
-          email: user.email,
-          picture: user.picture,
-          location: user.location,
-          role: roles[index % roles.length],
-          bio: bios[index % bios.length]
-        }));
-        
-        setTeamMembers(members);
-        setIsLoading(false);
-      } catch (err) {
-        setError('Failed to load team data. Please try again later.');
-        setIsLoading(false);
-        console.error('Error fetching team data:', err);
-      }
-    };
-
     fetchTeamMembers();
-  }, []);
+  }, [fetchTeamMembers]);
 
   return (
     <>
@@ -121,13 +140,13 @@ export default function TeamsPage() {
               {[...Array(12)].map((_, index) => (
                 <Card key={index} theme={cardTheme.card}>
                   <div className="flex justify-center">
-                    <div className="h-32 w-32 rounded-full bg-gray-300 animate-pulse" />
+                    <div className="h-32 w-32 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
                   </div>
-                  <div className="h-6 w-3/4 mx-auto bg-gray-300 rounded animate-pulse my-2" />
-                  <div className="h-4 w-1/2 mx-auto bg-gray-200 rounded animate-pulse my-1" />
-                  <div className="h-4 w-full bg-gray-200 rounded animate-pulse my-1" />
-                  <div className="h-4 w-5/6 bg-gray-200 rounded animate-pulse my-1" />
-                  <div className="h-4 w-4/6 bg-gray-200 rounded animate-pulse my-1" />
+                  <div className="h-6 w-3/4 mx-auto bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse" />
+                  <div className="h-4 w-1/2 mx-auto bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse" />
+                  <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse" />
+                  <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse" />
+                  <div className="h-4 w-4/6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                 </Card>
               ))}
             </div>
@@ -183,10 +202,10 @@ export default function TeamsPage() {
             <h2 className="text-3xl font-bold text-center mb-8">Our Team Culture</h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <div>
-                <h3 className="text-xl font-semibold mb-4">Collaboration & Excellence</h3>
+                <h3 className="text-xl font-semibold mb-4">Collaboration &amp; Excellence</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   At My Bus-ID, we believe that our strength comes from our people. We foster a 
-                  collaborative environment where every team member's voice is heard and valued.
+                  collaborative environment where every team member&apos;s voice is heard and valued.
                 </p>
                 <p className="text-gray-600 dark:text-gray-300">
                   We invest in continuous training and development to ensure our team has the 
@@ -194,13 +213,13 @@ export default function TeamsPage() {
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-4">Diversity & Inclusion</h3>
+                <h3 className="text-xl font-semibold mb-4">Diversity &amp; Inclusion</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   Our team represents the diverse communities we serve across Indonesia. We celebrate 
                   different perspectives and experiences that make our company stronger.
                 </p>
                 <p className="text-gray-600 dark:text-gray-300">
-                  We're committed to creating an inclusive workplace where everyone feels respected 
+                  We&apos;re committed to creating an inclusive workplace where everyone feels respected 
                   and has equal opportunities to grow and succeed.
                 </p>
               </div>
@@ -211,7 +230,7 @@ export default function TeamsPage() {
           <section className="py-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Interested in Joining Our Team?</h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
-              We're always looking for passionate individuals who share our commitment to excellence 
+              We&apos;re always looking for passionate individuals who share our commitment to excellence 
               in transportation services. Check out our current openings.
             </p>
             <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-lg text-lg font-semibold transition-colors">

@@ -36,7 +36,7 @@ export default function AboutUsPage() {
                 for Indonesians traveling between cities.
               </p>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                What started as a small family business has now grown into one of Indonesia's leading transportation 
+                What started as a small family business has now grown into one of Indonesia&apos;s leading transportation 
                 companies, with over 200 buses serving more than 50 routes across Java, Sumatra, and Bali.
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function AboutUsPage() {
             <div className="order-1 md:order-2">
               <h3 className="text-xl font-semibold mb-4">Values We Live By</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                At My Bus-ID, we believe that our people are our greatest asset. We've built a culture that 
+                At My Bus-ID, we believe that our people are our greatest asset. We&apos;ve built a culture that 
                 values safety, reliability, innovation, and customer satisfaction above all else.
               </p>
               <div className="space-y-4">
